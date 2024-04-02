@@ -63,3 +63,46 @@ collect(['setup', 'filters'])
             );
         }
     });
+
+
+    /**
+ * Register a custom post type called "Movie"
+ */
+function register_movie_post_type() {
+    $labels = [
+        'name'               => __('Movies', 'sage'),
+        'singular_name'      => __('Movie', 'sage'),
+        'menu_name'          => __('Movies', 'sage'),
+        'name_admin_bar'     => __('Movie', 'sage'),
+        'add_new'            => __('Add New', 'sage'),
+        'add_new_item'       => __('Add New Movie', 'sage'),
+        'new_item'           => __('New Movie', 'sage'),
+        'edit_item'          => __('Edit Movie', 'sage'),
+        'view_item'          => __('View Movie', 'sage'),
+        'all_items'          => __('All Movies', 'sage'),
+        'search_items'       => __('Search Movies', 'sage'),
+        'parent_item_colon'  => __('Parent Movies:', 'sage'),
+        'not_found'          => __('No movies found.', 'sage'),
+        'not_found_in_trash' => __('No movies found in Trash.', 'sage'),
+    ];
+
+    $args = [
+        'labels'             => $labels,
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => ['slug' => 'movie'],
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'supports'           => ['title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments'],
+    ];
+
+    register_post_type('movie', $args);
+}
+
+// Move the add_action() call after the function definition
+add_action('init', 'register_movie_post_type');
